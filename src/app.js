@@ -7,8 +7,9 @@ const cors = require("cors");
 
 app.use(cors(
     {
-        origin: "https://fronend-of-chat-app.vercel.app",
-         credentials: true
+        // origin: "https://fronend-of-chat-app.vercel.app",
+        origin: "http://localhost:5173",
+        credentials: true
     }
 ));
 app.use(express.json());
