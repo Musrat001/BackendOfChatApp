@@ -2,6 +2,7 @@ const express = require("express");
 const authRoutes = require("./routes/Auth.routes.js");
 const app = express();
 const profileRoutes = require("./routes/Profile.routes.js")
+const messageRoutes = require("./routes/Message.routes.js")
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -23,7 +24,9 @@ app.use("/api/v1/auth", authRoutes)
 
 app.use("/api/v1/profile", profileRoutes)
 
+// Message Routes
 
+app.use("/api/v1/message", messageRoutes)
 
 
 module.exports =
