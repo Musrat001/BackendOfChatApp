@@ -57,7 +57,7 @@ const getMessage = async (req, res) => {
     const { userId } = req.params;
 
 
-    const conRoom = await Conversation.find({
+    const conRoom = await Conversation.findOne({
         participants: {
             $all: [req.user._id, userId]
         }
@@ -65,7 +65,7 @@ const getMessage = async (req, res) => {
     })
 
     const messages = await MessageModel.find({
-        conversationId: conRoom[0]._id
+        conversationId: conRoom._id
 
     })
 
