@@ -18,7 +18,9 @@ const MessageSchema = new mongoose.Schema({
     image: {
         type: String
     }
-})
+},
+    { timestamps: true }
+)
 
 const MessageModel = mongoose.model("Message", MessageSchema);
 module.exports = {
