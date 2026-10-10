@@ -64,9 +64,10 @@ const getMessage = async (req, res) => {
 
     })
     if(!conRoom){
-        return res.status(401).json({
-            success: false,
-            messages: "These is no conversation yet."
+        return res.status(200).json({
+            success: true,
+            messages: [],
+            conversationRoom: null
         })
     }
 
@@ -74,19 +75,6 @@ const getMessage = async (req, res) => {
         conversationId: conRoom._id
 
     })
-
-    // const messagesOfReceiver = await MessageModel.find({
-    //     senderId: req.user._id
-    // })
-
-    // const messageArrayOfSender = [];
-    // const messageArrayOfReceiver = [];
-    // messageOfSender.forEach((obj) => {
-    //     messageArrayOfSender.push(obj.text);
-    // })
-    // messagesOfReceiver.forEach((obj) => {
-    //     messageArrayOfReceiver.push(obj.text);
-    // })
 
     return res.status(201).json({
         success: true,
