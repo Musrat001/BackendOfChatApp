@@ -63,6 +63,12 @@ const getMessage = async (req, res) => {
         }
 
     })
+    if(!conRoom){
+        return res.status(401).json({
+            success: false,
+            messages: "These is no conversation yet."
+        })
+    }
 
     const messages = await MessageModel.find({
         conversationId: conRoom._id
