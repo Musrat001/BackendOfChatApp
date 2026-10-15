@@ -65,9 +65,24 @@ const loginUser = async (req, res) => {
     return res.status(201).json({
         success: true,
         message: "You logged in successfully",
-        accessToken: accessToken
+        accessToken: accessToken,
+        user: user
     })
 
+}
+
+const getMe = async (req, res)=>{
+    const user = await User.findById({
+        _id: req.user._id
+    });
+    console.log(user);
+
+    return res.status(201).json({
+        success: true,
+        message: "Logged User",
+        user: user
+    })
+    
 }
 
 const logOut = async (req, res) => {
@@ -85,5 +100,6 @@ const logOut = async (req, res) => {
 module.exports = {
     registerUser,
     loginUser,
-    logOut
+    logOut,
+    getMe
 }
