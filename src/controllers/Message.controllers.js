@@ -3,7 +3,8 @@ const { Conversation } = require("../models/Conversation.models");
 const { MessageModel } = require("../models/Messages.models");
 const User = require("../models/User.models.js");
 const { getIO, userSocketMap } = require("../utils/socket.js");
-const {uploadOnCloudinary} = require("../utils/cloudinary.js")
+const { uploadOnCloudinary } = require("../utils/cloudinary.js");
+
 
 // working code without image upload
 // const sendMessage = async (req, res) => {
@@ -121,8 +122,8 @@ const sendMessage = async (req, res) => {
 
         // Create message with text and optional image
         const message = await MessageModel.create({
-            text: text || "",
-            image: imageUrl,
+            text: text,
+            image: imageUrl || null,
             senderId: req.user._id,
             conversationId: conversation._id
         });

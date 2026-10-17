@@ -1,4 +1,4 @@
-
+const { checkMessageBody } = require("../middlewares/message.mw.js")
 const express = require("express");
 const {
     sendMessage,
@@ -15,6 +15,7 @@ router.post(
     "/send",
     verifyJWT,
     upload.single("image"),
+    checkMessageBody,
     sendMessage
 );
 

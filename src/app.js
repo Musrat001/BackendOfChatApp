@@ -14,6 +14,8 @@ const { setIO, userSocketMap } = require("./utils/socket.js");
 
 const app = express();
 
+app.use(express.json());
+
 // Create HTTP server
 const server = createServer(app);
 
@@ -54,7 +56,7 @@ io.on("connection", (socket) => {
     userSocketMap[userId] = socket.id;
 
     // Join the user's personal room
-   
+
     socket.join(`user:${userId}`);
 
     console.log("User joined room:", `user:${userId}`);
@@ -104,7 +106,7 @@ io.on("connection", (socket) => {
 // });
 
 // Express middleware
-app.use(express.json());
+
 app.use(cookieParser());
 
 // Authentication routes
