@@ -15,20 +15,29 @@ const { setIO, userSocketMap } = require("./utils/socket.js");
 const app = express();
 
 app.use(express.json());
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://fronend-of-chat-app.vercel.app"
+];
+
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true
+}));
 
 // Create HTTP server
 const server = createServer(app);
 
 // Express CORS configuration
-app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true
-}));
+// app.use(cors({
+//     origin: "http://localhost:5173",
+//     credentials: true
+// }));
 
 // Initialize Socket.IO
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: allowedOrigins,
         methods: ["GET", "POST"],
         credentials: true
     }
