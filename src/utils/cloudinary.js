@@ -4,6 +4,12 @@
 //     path: "../utils/"
 // });
 const { v2: cloudinary } = require("cloudinary");
+console.log("cloude name", process.env.CLOUDINARY_CLOUD_NAME);
+console.log("cloud api key", process.env.CLOUDINARY_API_KEY);
+console.log("cloude api secret", process.env.CLOUDINARY_API_SECRET);
+
+
+
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
