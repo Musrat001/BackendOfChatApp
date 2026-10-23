@@ -16,7 +16,7 @@ const app = express();
 
 app.use(express.json());
 const allowedOrigins = [
-    
+
     "https://fronend-of-chat-app.vercel.app",
     "http://localhost:5173"
 ];
@@ -127,6 +127,11 @@ app.use("/api/v1/profile", profileRoutes);
 
 // Message routes
 app.use("/api/v1/message", messageRoutes);
+
+// Routes to push notification
+const pushSubscriptionRoutes = require("./routes/PushSubscription.routes.js");
+
+app.use("/api/v1/push", pushSubscriptionRoutes);
 
 // Export required objects
 module.exports = {

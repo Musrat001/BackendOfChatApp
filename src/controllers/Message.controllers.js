@@ -4,6 +4,8 @@ const { MessageModel } = require("../models/Messages.models");
 const User = require("../models/User.models.js");
 const { getIO, userSocketMap } = require("../utils/socket.js");
 const { uploadOnCloudinary } = require("../utils/cloudinary.js");
+const PushSubscription = require("../models/PushSubscription.models");
+const { sendPushNotification } = require("../utils/sendPushNotification.js");
 
 
 // working code without image upload
@@ -129,11 +131,45 @@ const sendMessage = async (req, res) => {
         });
 
         // Find receiver
+        // Find receiver
         const recId = conversation.participants.find(
             id => id.toString() !== req.user._id.toString()
         );
 
-        // Emit message to receiver
+        const senderName = req.user.name || "Someone";
+
+        // Find receiver's push subscriptions
+        const subscriptions = await PushSubscription.find({
+            userId: recId,
+        });
+
+        // Prepare notification content
+        const notificationPayload = {
+            title: `New message from ${senderName}`,
+            body: message.text
+                ? message.text
+                : message.image
+                    ? "You received an image."
+                    : "You received a new message.",
+            url: "/",
+        };
+
+        // Send notifications without failing the message request
+        Promise.all(
+            subscriptions.map(subscription =>
+                sendPushNotification(
+                    {
+                        endpoint: subscription.endpoint,
+                        keys: subscription.keys,
+                    },
+                    notificationPayload
+                )
+            )
+        ).catch(error => {
+            console.error("Push notification processing failed:", error);
+        });
+
+        // Emit message to receiver through Socket.IO
         const room = `user:${recId}`;
 
         io.to(room).emit("newMessage", message);
@@ -143,6 +179,7 @@ const sendMessage = async (req, res) => {
             message,
             conversation
         });
+
 
     } catch (error) {
         console.error("Send message error:", error);
