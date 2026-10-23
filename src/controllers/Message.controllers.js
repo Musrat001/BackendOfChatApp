@@ -89,7 +89,7 @@ const { uploadOnCloudinary } = require("../utils/cloudinary.js");
 
 // }
 
-
+// working code with upload image function
 const sendMessage = async (req, res) => {
     try {
         const { text, receiverId } = req.body;
@@ -122,7 +122,7 @@ const sendMessage = async (req, res) => {
 
         // Create message with text and optional image
         const message = await MessageModel.create({
-            text: text,
+            text: text || "",
             image: imageUrl || null,
             senderId: req.user._id,
             conversationId: conversation._id
@@ -154,7 +154,7 @@ const sendMessage = async (req, res) => {
     }
 };
 
-module.exports = { sendMessage };
+// module.exports = { sendMessage };
 
 
 const getMessage = async (req, res) => {
